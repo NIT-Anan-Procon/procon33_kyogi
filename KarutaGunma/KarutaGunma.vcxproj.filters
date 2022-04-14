@@ -53,8 +53,8 @@
     </Image>
   </ItemGroup>
   <ItemGroup>
-    <None Include="WAVParser.dll">
+    <Library Include="lib\WAVParser.lib">
       <Filter>Resource Files</Filter>
-    </None>
+    </Library>
   </ItemGroup>
 </Project>
