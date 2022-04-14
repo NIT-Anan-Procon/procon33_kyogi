@@ -27,6 +27,12 @@
     <ClInclude Include="KarutaGunma.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="WAVData.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="WAVUtil.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp">
@@ -45,5 +51,10 @@
     <Image Include="KarutaGunma.ico">
       <Filter>Resource Files</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WAVParser.dll">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
 </Project>

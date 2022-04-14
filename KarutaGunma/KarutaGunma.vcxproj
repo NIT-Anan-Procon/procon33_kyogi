@@ -143,6 +143,8 @@
     <ClInclude Include="KarutaGunma.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="targetver.h" />
+    <ClInclude Include="WAVData.h" />
+    <ClInclude Include="WAVUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp" />
@@ -153,6 +155,9 @@
   <ItemGroup>
     <Image Include="KarutaGunma.ico" />
     <Image Include="small.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="WAVParser.dll" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
