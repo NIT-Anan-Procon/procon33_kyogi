@@ -158,6 +158,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (GetOpenFileName(&ofn) == TRUE)
                     {
                         // use ofn.lpstrFile here
+                        std::wstring arr_w(szFile);
+                        std::string fileName(arr_w.begin(), arr_w.end());
+                        wav::WAVData wavData(fileName);
+                        wav::WAVData copy = wavData;
+
+
+                        copy.WriteToFile("./test_write.wav");
+
+                        return 0;
 
                     }
                    }

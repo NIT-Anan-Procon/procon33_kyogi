@@ -38,6 +38,12 @@
     <ClCompile Include="KarutaGunma.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="WAVData.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="WAVUtil.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KarutaGunma.rc">

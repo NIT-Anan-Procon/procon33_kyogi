@@ -150,6 +150,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp" />
+    <ClCompile Include="WAVData.cpp" />
+    <ClCompile Include="WAVUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KarutaGunma.rc" />
