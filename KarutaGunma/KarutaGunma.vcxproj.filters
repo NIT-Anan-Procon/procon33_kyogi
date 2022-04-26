@@ -33,6 +33,9 @@
     <ClInclude Include="WAVUtil.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="sndfile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp">

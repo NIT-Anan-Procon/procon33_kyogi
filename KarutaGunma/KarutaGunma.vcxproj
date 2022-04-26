@@ -92,6 +92,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalDependencies>$(SolutionDir)KarutaGunma\lib\sndfile.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -144,6 +145,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="KarutaGunma.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="sndfile.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="WAVData.h" />
     <ClInclude Include="WAVUtil.h" />
