@@ -163,6 +163,9 @@
   <ItemGroup>
     <Library Include="lib\WAVParser.lib" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="programs.zip" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
