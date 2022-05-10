@@ -15,6 +15,7 @@
 #include <memory.h>
 #include <tchar.h>
 #include <string.h>
+#include <fstream>
 // include library
 #include "sndfile.hh"
 

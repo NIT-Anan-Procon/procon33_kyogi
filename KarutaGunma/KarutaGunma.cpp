@@ -160,14 +160,39 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         // use ofn.lpstrFile here
                         std::wstring arr_w(szFile);
                         std::string fileName(arr_w.begin(), arr_w.end());
-                        wav::WAVData wavData(fileName);
+                        
+                        SndfileHandle myf = SndfileHandle(fileName);
+
+                        /*
+                        std::string output = " ";
+
+                        output += "Opened file  :" + fileName + '\n';
+                        output += "Sample rate  :" + myf.samplerate() + '\n';
+                        output += "Channels     :" + myf.channels() + '\n';
+                        output += "Error        :" + std::string( myf.strError()) + '\n';
+                        output += "Frames       :" + int(myf.frames()) + '\n\n';
+                        */
+                        
+
+                        //write to file
+                        std::ofstream myfile;
+                        myfile.open("example.txt",std::ios::app);
+                        myfile << "\n\n";
+                        myfile << "Opened file  :" << fileName << '\n';
+                        myfile << "Error        :" << std::string(myf.strError()) <<'\n';
+                        myfile << "Sample rate  :" << myf.samplerate() << '\n';
+                        myfile << "Channels     :" << myf.channels() << '\n';
+                        myfile << "Frames       :" << int(myf.frames()) << "\n\n";
+                        myfile.close();
+
+                        /*wav::WAVData wavData(fileName);
                         wav::WAVData copy = wavData;
 
 
                         copy.WriteToFile("./test_write.wav");
 
                         return 0;
-
+                        */
                     }
                    }
                 
