@@ -164,9 +164,11 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="lib\sndfile.lib" />
     <Library Include="lib\WAVParser.lib" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="lib\sndfile.dll" />
     <None Include="programs.zip" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
