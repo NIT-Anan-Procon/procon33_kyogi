@@ -16,5 +16,5 @@
 #include <tchar.h>
 #include <string.h>
 // include library
-#include "sndfile.h"
+#include "sndfile.hh"
 
