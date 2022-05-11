@@ -92,7 +92,7 @@
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>$(SolutionDir)KarutaGunma\lib\</AdditionalDependencies>
+      <AdditionalDependencies>$(SolutionDir)KarutaGunma\lib\sndfile.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y /d  "$(ProjectDir)lib\*.dll" "$(TargetDir)"</Command>
