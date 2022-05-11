@@ -147,6 +147,7 @@
   <ItemGroup>
     <ClInclude Include="fftw3.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="DSP.h" />
     <ClInclude Include="KarutaGunma.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sndfile.h" />
@@ -157,6 +158,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp" />
+    <ClCompile Include="DSP.cpp" />
     <ClCompile Include="WAVData.cpp" />
     <ClCompile Include="WAVUtil.cpp" />
   </ItemGroup>
