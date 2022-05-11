@@ -187,7 +187,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         myfile.close();
 
                         FILE* dataOut;
-                        dataOut = fopen("./dataOut.txt", "w");
+                        fopen_s(&dataOut,"./dataOut.txt", "w");
 
                         convert_to_text(myf, dataOut, 0);
 
