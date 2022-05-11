@@ -18,4 +18,5 @@
 #include <fstream>
 // include library
 #include "sndfile.hh"
+#include "fftw3.h"
 

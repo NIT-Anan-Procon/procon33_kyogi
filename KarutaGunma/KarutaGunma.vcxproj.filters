@@ -42,8 +42,8 @@
     <ClInclude Include="sndfile.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="lib\fftw3.h">
-      <Filter>Resource Files</Filter>
+    <ClInclude Include="fftw3.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
