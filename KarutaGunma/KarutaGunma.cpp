@@ -148,7 +148,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     ofn.hwndOwner = hWnd;
                     ofn.lpstrFile = szFile;
                     ofn.nMaxFile = sizeof(szFile);
-                    ofn.lpstrFilter = _T("All\0*.*\0Text\0*.TXT\0");
+                    ofn.lpstrFilter = _T("Wav\0*.WAV\0All\0*.*\0");
                     ofn.nFilterIndex = 1;
                     ofn.lpstrFileTitle = NULL;
                     ofn.nMaxFileTitle = 0;
@@ -207,6 +207,16 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             PAINTSTRUCT ps;
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
+            RECT rec;
+            TextOut(hdc, 10, 30, L"使用例 sample", 13);
+            SetTextColor(hdc, RGB(0, 255, 255));
+            rec.top = 50;
+            rec.left = 10;
+            rec.right = 290;
+            rec.bottom = 100;
+            DrawText(hdc, L"使用例 sample\nプリフィックス(&A)", -1, &rec,
+                DT_WORDBREAK | DT_CENTER);
+
             EndPaint(hWnd, &ps);
         }
         break;
