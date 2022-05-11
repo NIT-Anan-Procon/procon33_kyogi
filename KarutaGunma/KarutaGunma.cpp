@@ -2,6 +2,7 @@
 //
 
 #include "framework.h"
+#include "DSP.h"
 #include "KarutaGunma.h"
 
 #define MAX_LOADSTRING 100
@@ -185,6 +186,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         myfile << "Frames       :" << int(myf.frames()) << "\n\n";
                         myfile.close();
 
+                        FILE* dataOut;
+                        dataOut = fopen("./dataOut.txt", "w");
+
+                        convert_to_text(myf, dataOut, 0);
+
+                        fclose(dataOut);
+
                         /*wav::WAVData wavData(fileName);
                         wav::WAVData copy = wavData;
 
@@ -208,13 +216,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
             RECT rec;
-            TextOut(hdc, 10, 30, L"Žg—p—á sample", 13);
+            TextOut(hdc, 10, 30, L"ï¿½gï¿½pï¿½ï¿½ sample", 13);
             SetTextColor(hdc, RGB(0, 255, 255));
             rec.top = 50;
             rec.left = 10;
             rec.right = 290;
             rec.bottom = 100;
-            DrawText(hdc, L"Žg—p—á sample\nƒvƒŠƒtƒBƒbƒNƒX(&A)", -1, &rec,
+            DrawText(hdc, L"ï¿½gï¿½pï¿½ï¿½ sample\nï¿½vï¿½ï¿½ï¿½tï¿½Bï¿½bï¿½Nï¿½X(&A)", -1, &rec,
                 DT_WORDBREAK | DT_CENTER);
 
             EndPaint(hWnd, &ps);

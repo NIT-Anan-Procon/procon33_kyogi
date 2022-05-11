@@ -3,15 +3,27 @@
 
 #define	BLOCK_SIZE 4096
 
+#ifdef DBL_DECIMAL_DIG
+	#define OP_DBL_Digs (DBL_DECIMAL_DIG)
+#else
+
+	#ifdef DECIMAL_DIG
+		#define OP_DBL_Digs (DECIMAL_DIG)
+	#else
+		#define OP_DBL_Digs (DBL_DIG + 3)
+	#endif
+#endif
+
 static int
-convert_to_text(SNDFILE* infile, FILE* outfile, int channels, int full_precision)
+convert_to_text(SndfileHandle sndf,FILE* outfile, int full_precision)
 {
 	float* buf;
 	sf_count_t frames;
 	int k, m, readcount;
+	int channels = sndf.channels();
 
 	buf = new float[BLOCK_SIZE];
-	if (buf == NULL)
+	if (buf == nullptr)
 	{
 		printf("Error : Out of memory.\n\n");
 		return 1;
@@ -19,7 +31,9 @@ convert_to_text(SNDFILE* infile, FILE* outfile, int channels, int full_precision
 
 	frames = BLOCK_SIZE / channels;
 
-	while ((readcount = (int)sf_readf_float(infile, buf, frames)) > 0)
+
+	//while ((readcount = (int)sf_readf_float(infile, buf, frames)) > 0)
+	while ((readcount = (int)sndf.readf(buf, frames)) > 0)
 	{
 		for (k = 0; k < readcount; k++)
 		{
