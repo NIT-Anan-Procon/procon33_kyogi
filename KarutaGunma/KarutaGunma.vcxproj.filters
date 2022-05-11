@@ -42,6 +42,9 @@
     <ClInclude Include="sndfile.hh">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="lib\fftw3.h">
+      <Filter>Resource Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp">
@@ -74,12 +77,33 @@
     <Library Include="lib\sndfile.lib">
       <Filter>Resource Files</Filter>
     </Library>
+    <Library Include="lib\libfftw3-3.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="lib\libfftw3f-3.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
+    <Library Include="lib\libfftw3l-3.lib">
+      <Filter>Resource Files</Filter>
+    </Library>
   </ItemGroup>
   <ItemGroup>
     <None Include="programs.zip">
       <Filter>references</Filter>
     </None>
     <None Include="lib\sndfile.dll">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="fftw-3.3.5-dll32.zip">
+      <Filter>references</Filter>
+    </None>
+    <None Include="lib\libfftw3-3.dll">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lib\libfftw3f-3.dll">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="lib\libfftw3l-3.dll">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>
