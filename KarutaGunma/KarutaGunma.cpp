@@ -159,10 +159,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     if (GetOpenFileName(&ofn) == TRUE)
                     {
                         // use ofn.lpstrFile here
-                        std::wstring arr_w(szFile);
+                        std::wstring arr_w(ofn.lpstrFile);
                         std::string fileName(arr_w.begin(), arr_w.end());
                         
-                        SndfileHandle myf = SndfileHandle(fileName);
+                        SndfileHandle myf = SndfileHandle(ofn.lpstrFile);
 
                         /*
                         std::string output = " ";
@@ -173,34 +173,33 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                         output += "Error        :" + std::string( myf.strError()) + '\n';
                         output += "Frames       :" + int(myf.frames()) + '\n\n';
                         */
-                        
-
+                        std::string strErr = std::string(myf.strError());
+                        std::wstring wstrErr = std::wstring(strErr.begin(), strErr.end());
+                        const wchar_t* wErr = wstrErr.c_str();
                         //write to file
-                        std::ofstream myfile;
-                        myfile.open("example.txt",std::ios::app);
+
+                        std::locale::global(std::locale(""));
+                        std::wofstream myfile;
+                        myfile.open("Wcharexample.txt",std::ios::app);
                         myfile << "\n\n";
-                        myfile << "Opened file  :" << fileName << '\n';
-                        myfile << "Error        :" << std::string(myf.strError()) <<'\n';
+                        myfile << "Opened file  :" << ofn.lpstrFile << '\n';
+                        myfile << "Error        :" << wErr << '\n';
                         myfile << "Sample rate  :" << myf.samplerate() << '\n';
                         myfile << "Channels     :" << myf.channels() << '\n';
-                        myfile << "Frames       :" << int(myf.frames()) << "\n\n";
+                        myfile << "Frames       :" << int(myf.frames()) << '\n';
                         myfile.close();
 
                         FILE* dataOut;
-                        fopen_s(&dataOut,"./dataOut.txt", "w");
 
-                        convert_to_text(myf, dataOut, 0);
+                        if (fopen_s(&dataOut, "./dataOut.txt", "w"))
+                        {
 
-                        fclose(dataOut);
+                            convert_to_text(myf, dataOut, 0);
 
-                        /*wav::WAVData wavData(fileName);
-                        wav::WAVData copy = wavData;
+                            fclose(dataOut);
+                        }
 
 
-                        copy.WriteToFile("./test_write.wav");
-
-                        return 0;
-                        */
                     }
                    }
                 
