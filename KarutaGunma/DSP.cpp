@@ -51,6 +51,8 @@ convert_to_text(SndfileHandle sndf,FILE* outfile, int full_precision)
 	return 0;
 } /* convert_to_text */
 
+
+//FUNCTION: Load Wav file and dump info, data
 SndfileHandle loadWav()
 {
     // common dialog box structure, setting all fields to 0 is important
