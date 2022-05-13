@@ -141,41 +141,41 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             case ID_FILE_LOADFILE:
                    {
+                    SndfileHandle SNDfile;
                     // common dialog box structure, setting all fields to 0 is important
                     OPENFILENAME ofn = { 0 };
                     TCHAR szFile[260] = { 0 };
                     // Initialize remaining fields of OPENFILENAME structure
                     ofn.lStructSize = sizeof(ofn);
-                    ofn.hwndOwner = hWnd;
+                    ofn.hwndOwner = NULL;
                     ofn.lpstrFile = szFile;
                     ofn.nMaxFile = sizeof(szFile);
-                    ofn.lpstrFilter = _T("Wav\0*.WAV\0All\0*.*\0");
+                    ofn.lpstrFilter = _T("Wav File(*.wav)\0*.WAV\0All\0*.*\0");
                     ofn.nFilterIndex = 1;
                     ofn.lpstrFileTitle = NULL;
                     ofn.nMaxFileTitle = 0;
                     ofn.lpstrInitialDir = NULL;
                     ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
-                    if (GetOpenFileName(&ofn) == TRUE)
+                    if (!GetOpenFileName(&ofn))
                     {
+                        std::ofstream logFile;
+                        logFile.open("log.txt", std::ios::app);
+                        logFile << "Error\n\n";
+                        logFile.close();
+                        break;
+                    }
                         // use ofn.lpstrFile here
                         std::wstring arr_w(ofn.lpstrFile);
                         std::string fileName(arr_w.begin(), arr_w.end());
                         
                         SndfileHandle myf = SndfileHandle(ofn.lpstrFile);
 
-                        /*
-                        std::string output = " ";
-
-                        output += "Opened file  :" + fileName + '\n';
-                        output += "Sample rate  :" + myf.samplerate() + '\n';
-                        output += "Channels     :" + myf.channels() + '\n';
-                        output += "Error        :" + std::string( myf.strError()) + '\n';
-                        output += "Frames       :" + int(myf.frames()) + '\n\n';
-                        */
+                        //convert char to string to wstring to wchar LOL
                         std::string strErr = std::string(myf.strError());
                         std::wstring wstrErr = std::wstring(strErr.begin(), strErr.end());
                         const wchar_t* wErr = wstrErr.c_str();
+
                         //write to file
 
                         std::locale::global(std::locale(""));
@@ -199,8 +199,6 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                             fclose(dataOut);
                         }
 
-
-                    }
                    }
                 
                 break;
