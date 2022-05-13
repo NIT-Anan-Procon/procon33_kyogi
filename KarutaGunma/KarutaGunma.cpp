@@ -191,9 +191,9 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 
                         FILE* dataOut;
 
-                        if (fopen_s(&dataOut, "./dataOut.txt", "w"))
+                        fopen_s(&dataOut, "./dataOut.txt", "w");
+                        if(dataOut != NULL)
                         {
-
                             convert_to_text(myf, dataOut, 0);
 
                             fclose(dataOut);
@@ -215,13 +215,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
             RECT rec;
-            TextOut(hdc, 10, 30, L"�g�p�� sample", 13);
+            TextOut(hdc, 10, 30, L"sample12char", 13);
             SetTextColor(hdc, RGB(0, 255, 255));
             rec.top = 50;
             rec.left = 10;
             rec.right = 290;
             rec.bottom = 100;
-            DrawText(hdc, L"�g�p�� sample\n�v���t�B�b�N�X(&A)", -1, &rec,
+            DrawText(hdc, L"sample", -1, &rec,
                 DT_WORDBREAK | DT_CENTER);
 
             EndPaint(hWnd, &ps);
