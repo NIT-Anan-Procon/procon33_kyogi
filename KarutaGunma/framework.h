@@ -16,6 +16,7 @@
 #include <tchar.h>
 #include <string.h>
 #include <fstream>
+#include <iostream>
 // include library
 #include "sndfile.hh"
 #include "fftw3.h"

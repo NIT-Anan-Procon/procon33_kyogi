@@ -153,14 +153,10 @@
     <ClInclude Include="sndfile.h" />
     <ClInclude Include="sndfile.hh" />
     <ClInclude Include="targetver.h" />
-    <ClInclude Include="WAVData.h" />
-    <ClInclude Include="WAVUtil.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp" />
     <ClCompile Include="DSP.cpp" />
-    <ClCompile Include="WAVData.cpp" />
-    <ClCompile Include="WAVUtil.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KarutaGunma.rc" />
@@ -174,7 +170,6 @@
     <Library Include="lib\libfftw3f-3.lib" />
     <Library Include="lib\libfftw3l-3.lib" />
     <Library Include="lib\sndfile.lib" />
-    <Library Include="lib\WAVParser.lib" />
   </ItemGroup>
   <ItemGroup>
     <None Include="fftw-3.3.5-dll32.zip" />
