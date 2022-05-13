@@ -140,67 +140,13 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
                 break;
             case ID_FILE_LOADFILE:
-                   {
-                    SndfileHandle SNDfile;
-                    // common dialog box structure, setting all fields to 0 is important
-                    OPENFILENAME ofn = { 0 };
-                    TCHAR szFile[260] = { 0 };
-                    // Initialize remaining fields of OPENFILENAME structure
-                    ofn.lStructSize = sizeof(ofn);
-                    ofn.hwndOwner = NULL;
-                    ofn.lpstrFile = szFile;
-                    ofn.nMaxFile = sizeof(szFile);
-                    ofn.lpstrFilter = _T("Wav File(*.wav)\0*.WAV\0All\0*.*\0");
-                    ofn.nFilterIndex = 1;
-                    ofn.lpstrFileTitle = NULL;
-                    ofn.nMaxFileTitle = 0;
-                    ofn.lpstrInitialDir = NULL;
-                    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+                {
+                    SndfileHandle SNDfile = loadWav();
+                    //Do DSP here
 
-                    if (!GetOpenFileName(&ofn))
-                    {
-                        std::ofstream logFile;
-                        logFile.open("log.txt", std::ios::app);
-                        logFile << "Error\n\n";
-                        logFile.close();
-                        break;
-                    }
-                        // use ofn.lpstrFile here
-                        std::wstring arr_w(ofn.lpstrFile);
-                        std::string fileName(arr_w.begin(), arr_w.end());
-                        
-                        SndfileHandle myf = SndfileHandle(ofn.lpstrFile);
 
-                        //convert char to string to wstring to wchar LOL
-                        std::string strErr = std::string(myf.strError());
-                        std::wstring wstrErr = std::wstring(strErr.begin(), strErr.end());
-                        const wchar_t* wErr = wstrErr.c_str();
 
-                        //write to file
-
-                        std::locale::global(std::locale(""));
-                        std::wofstream myfile;
-                        myfile.open("Wcharexample.txt",std::ios::app);
-                        myfile << "\n\n";
-                        myfile << "Opened file  :" << ofn.lpstrFile << '\n';
-                        myfile << "Error        :" << wErr << '\n';
-                        myfile << "Sample rate  :" << myf.samplerate() << '\n';
-                        myfile << "Channels     :" << myf.channels() << '\n';
-                        myfile << "Frames       :" << int(myf.frames()) << '\n';
-                        myfile.close();
-
-                        FILE* dataOut;
-
-                        fopen_s(&dataOut, "./dataOut.txt", "w");
-                        if(dataOut != NULL)
-                        {
-                            convert_to_text(myf, dataOut, 0);
-
-                            fclose(dataOut);
-                        }
-
-                   }
-                
+                }
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
