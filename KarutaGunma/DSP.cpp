@@ -51,9 +51,13 @@ convert_to_text(SndfileHandle sndf,FILE* outfile, int full_precision)
 	return 0;
 } /* convert_to_text */
 
+int openFileWav(OPENFILENAME* pofn)
+{
+
+}
 
 //FUNCTION: Load Wav file and dump info, data
-SndfileHandle loadWav()
+int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
 {
     // common dialog box structure, setting all fields to 0 is important
     OPENFILENAME ofn = { 0 };
@@ -76,7 +80,7 @@ SndfileHandle loadWav()
         logFile.open("log.txt", std::ios::app);
         logFile << "Error Opening File\n\n";
         logFile.close();
-        return;
+        return -1;
     }
 
     // use ofn.lpstrFile here
@@ -88,10 +92,10 @@ SndfileHandle loadWav()
     std::string fileName(arr_w.begin(), arr_w.end());
     */
 
-    SndfileHandle myf = SndfileHandle(ofn.lpstrFile);
+    *myf = SndfileHandle(ofn.lpstrFile);
 
     //convert char to string to wstring to wchar LOL
-    std::string strErr = std::string(myf.strError());
+    std::string strErr = std::string(myf->strError());
     std::wstring wstrErr = std::wstring(strErr.begin(), strErr.end());
     const wchar_t* wErr = wstrErr.c_str();
 
@@ -103,9 +107,9 @@ SndfileHandle loadWav()
     myfile << "\n\n";
     myfile << "Opened file  :" << ofn.lpstrFile << '\n';
     myfile << "Error        :" << wErr << '\n';
-    myfile << "Sample rate  :" << myf.samplerate() << '\n';
-    myfile << "Channels     :" << myf.channels() << '\n';
-    myfile << "Frames       :" << int(myf.frames()) << '\n';
+    myfile << "Sample rate  :" << myf->samplerate() << '\n';
+    myfile << "Channels     :" << myf->channels() << '\n';
+    myfile << "Frames       :" << int(myf->frames()) << '\n';
     myfile.close();
 
     //dump
@@ -113,10 +117,10 @@ SndfileHandle loadWav()
     fopen_s(&dataOut, "./dataOut.txt", "w");
     if (dataOut != NULL)
     {
-        convert_to_text(myf, dataOut, 0);
+        convert_to_text(*myf, dataOut, 0);
 
         fclose(dataOut);
     }
 
-    return myf;
+    return 1;
 }

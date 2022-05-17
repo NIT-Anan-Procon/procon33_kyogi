@@ -141,7 +141,8 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             case ID_FILE_LOADFILE:
                 {
-                    SndfileHandle SNDfile = loadWav();
+                    SndfileHandle SNDfile;
+                    loadWav(&SNDfile);
                     //Do DSP here
 
 
