@@ -51,30 +51,22 @@ convert_to_text(SndfileHandle sndf,FILE* outfile, int full_precision)
 	return 0;
 } /* convert_to_text */
 
-int openFileWav(OPENFILENAME* pofn)
+int openFileWav(OPENFILENAME* pofn, DWORD size, LPWSTR szFile, DWORD sizeFile )
 {
-
-}
-
-//FUNCTION: Load Wav file and dump info, data
-int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
-{
-    // common dialog box structure, setting all fields to 0 is important
-    OPENFILENAME ofn = { 0 };
-    TCHAR szFile[260] = { 0 };
+    
     // Initialize remaining fields of OPENFILENAME structure
-    ofn.lStructSize = sizeof(ofn);
-    ofn.hwndOwner = NULL;
-    ofn.lpstrFile = szFile;
-    ofn.nMaxFile = sizeof(szFile);
-    ofn.lpstrFilter = _T("Wav File(*.wav)\0*.WAV\0All\0*.*\0");
-    ofn.nFilterIndex = 1;
-    ofn.lpstrFileTitle = NULL;
-    ofn.nMaxFileTitle = 0;
-    ofn.lpstrInitialDir = NULL;
-    ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+    pofn->lStructSize = size;
+    pofn->hwndOwner = NULL;
+    pofn->lpstrFile = szFile;
+    pofn->nMaxFile = sizeFile;
+    pofn->lpstrFilter = _T("Wav File(*.wav)\0*.WAV\0All\0*.*\0");
+    pofn->nFilterIndex = 1;
+    pofn->lpstrFileTitle = NULL;
+    pofn->nMaxFileTitle = 0;
+    pofn->lpstrInitialDir = NULL;
+    pofn->Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
-    if (!GetOpenFileName(&ofn))
+    if (!GetOpenFileName(pofn))
     {
         std::ofstream logFile;
         logFile.open("log.txt", std::ios::app);
@@ -82,6 +74,8 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
         logFile.close();
         return -1;
     }
+    return 1;
+
 
     // use ofn.lpstrFile here
 
@@ -91,8 +85,14 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
     std::wstring arr_w(ofn.lpstrFile);
     std::string fileName(arr_w.begin(), arr_w.end());
     */
+}
 
-    *myf = SndfileHandle(ofn.lpstrFile);
+//FUNCTION: Load Wav file and dump info, data
+int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
+{
+   
+
+    *myf = SndfileHandle(pofn->lpstrFile);
 
     //convert char to string to wstring to wchar LOL
     std::string strErr = std::string(myf->strError());
@@ -105,7 +105,7 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
     std::wofstream myfile;
     myfile.open("Wcharexample.txt", std::ios::app);
     myfile << "\n\n";
-    myfile << "Opened file  :" << ofn.lpstrFile << '\n';
+    myfile << "Opened file  :" << pofn->lpstrFile << '\n';
     myfile << "Error        :" << wErr << '\n';
     myfile << "Sample rate  :" << myf->samplerate() << '\n';
     myfile << "Channels     :" << myf->channels() << '\n';
