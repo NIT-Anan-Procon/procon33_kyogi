@@ -140,19 +140,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 DestroyWindow(hWnd);
                 break;
             case ID_FILE_LOADFILE:
-                {
-                    
-                    // common dialog box structure, setting all fields to 0 is important
-                    OPENFILENAME ofn = { 0 };
-                    TCHAR szFile[260] = { 0 };
-                    SndfileHandle SNDfile;
-                    openFileWav(&ofn,sizeof(ofn),szFile,sizeof(szFile));
-                    loadWav(&ofn,&SNDfile);
-                    //Do DSP here
 
+                    //do stuff in side the dspmain
+                    DSPMAIN();
 
-
-                }
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);

@@ -124,3 +124,21 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
 
     return 1;
 }
+
+//main stuff to do ( break off from gui)
+int DSPMAIN()
+{
+    // common dialog box structure, setting all fields to 0 is important
+    OPENFILENAME ofn = { 0 };
+    TCHAR szFile[260] = { 0 };
+
+    //load file into filehandle
+    SndfileHandle SNDfile;
+    openFileWav(&ofn, sizeof(ofn), szFile, sizeof(szFile));
+    loadWav(&ofn, &SNDfile);
+
+    //Do DSP here
+
+
+    return 1;
+}
