@@ -11,6 +11,7 @@
 #include <commdlg.h>
 // C RunTime Header Files
 #include <stdlib.h>
+#include <math.h>
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>

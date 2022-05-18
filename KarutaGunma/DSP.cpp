@@ -1,6 +1,8 @@
 #include "framework.h"
 #include <iostream>
 
+
+#include <corecrt_math_defines.h>
 #define	BLOCK_SIZE 4096
 
 #ifdef DBL_DECIMAL_DIG
@@ -112,6 +114,8 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
     myfile << "Frames       :" << int(myf->frames()) << '\n';
     myfile.close();
 
+
+
     //dump
     FILE* dataOut;
     fopen_s(&dataOut, "./dataOut.txt", "w");
@@ -138,7 +142,80 @@ int DSPMAIN()
     loadWav(&ofn, &SNDfile);
 
     //Do DSP here
+    const int N = 1024;
+    fftw_complex* in = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
+    fftw_complex* out = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
+    //fftw_complex in[N], out[N]; /* double [2] */
+    fftw_plan p;
+    int i;
 
 
+    p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
+
+    float* buf = new float[N];
+    if (buf == nullptr)
+    {
+        printf("Error : Out of memory.\n\n");
+        
+    };
+
+    /* prepare a cosine wave */
+    /*
+    for (i = 0; i < N; i++) {
+        in[i][0] = cos(static_cast<long double>(3) * 2 * M_PI * i / N);
+        in[i][1] = 0;
+    }
+    */
+    /* forward Fourier transform, save the result in 'out' */
+
+    for (i = 0; i < N; i++) {
+        in[i][0] = cos(static_cast<long double>(3) * 2 * M_PI * i / N);
+        in[i][1] = 0;
+    }
+
+    /*
+    int frames = N / SNDfile.channels();
+
+    SNDfile.readf(buf, frames);
+
+
+    if (SNDfile.channels() == 1)
+    {
+        for (i = 0; i < N; i++) {
+            in[i][0] = buf[i];
+            in[i][1] = 0;
+        }
+    }
+    else
+    {
+        for (i = 0; 2*i < N; i++) {
+            in[i][0] = buf[2*i-1];
+            in[i][1] = buf[2*i];
+        }
+    }
+    */
+
+    FILE* fftOut;
+    fopen_s(&fftOut, "./fftOut.txt", "w");
+    if (fftOut != NULL)
+    {
+        
+        fftw_execute(p);
+        for (i = 0; i < N; i++)
+           fprintf(fftOut,"freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
+
+
+        fclose(fftOut);
+
+    }
+
+
+    fftw_destroy_plan(p);
+    fftw_cleanup();
+    fftw_free(in);
+    fftw_free(out);
+
+    
+    delete[] buf;
     return 1;
 }
