@@ -117,6 +117,7 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
 
 
     //dump
+    /*
     FILE* dataOut;
     fopen_s(&dataOut, "./dataOut.txt", "w");
     if (dataOut != NULL)
@@ -125,7 +126,7 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
 
         fclose(dataOut);
     }
-
+    */
     return 1;
 }
 
@@ -142,7 +143,9 @@ int DSPMAIN()
     loadWav(&ofn, &SNDfile);
 
     //Do DSP here
-    const int N = 1024;
+    const int N = 32768;
+
+
     fftw_complex* in = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
     fftw_complex* out = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
     //fftw_complex in[N], out[N]; /* double [2] */
@@ -152,7 +155,7 @@ int DSPMAIN()
 
     p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 
-    float* buf = new float[N];
+    double* buf = new double[N];
     if (buf == nullptr)
     {
         printf("Error : Out of memory.\n\n");
@@ -168,12 +171,8 @@ int DSPMAIN()
     */
     /* forward Fourier transform, save the result in 'out' */
 
-    for (i = 0; i < N; i++) {
-        in[i][0] = cos(static_cast<long double>(3) * 2 * M_PI * i / N);
-        in[i][1] = 0;
-    }
 
-    /*
+    
     int frames = N / SNDfile.channels();
 
     SNDfile.readf(buf, frames);
@@ -193,7 +192,7 @@ int DSPMAIN()
             in[i][1] = buf[2*i];
         }
     }
-    */
+    
 
     FILE* fftOut;
     fopen_s(&fftOut, "./fftOut.txt", "w");
