@@ -139,8 +139,14 @@ int DSPMAIN()
 
     //load file into filehandle
     SndfileHandle SNDfile;
-    openFileWav(&ofn, sizeof(ofn), szFile, sizeof(szFile));
+
+    if (openFileWav(&ofn, sizeof(ofn), szFile, sizeof(szFile)) == -1)
+    {
+        return -1;
+    }
     loadWav(&ofn, &SNDfile);
+
+
 
     //Do DSP here
     const int N = 32767;
