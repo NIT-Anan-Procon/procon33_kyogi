@@ -143,17 +143,17 @@ int DSPMAIN()
     loadWav(&ofn, &SNDfile);
 
     //Do DSP here
-    const int N = 32768;
+    const int N = 32767;
 
 
     fftw_complex* in = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
     fftw_complex* out = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
+    fftw_complex* in2 = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
     //fftw_complex in[N], out[N]; /* double [2] */
-    fftw_plan p;
+    fftw_plan p,q;
     int i;
 
 
-    p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
 
     double* buf = new double[N];
     if (buf == nullptr)
@@ -181,7 +181,7 @@ int DSPMAIN()
     if (SNDfile.channels() == 1)
     {
         for (i = 0; i < N; i++) {
-            in[i][0] = buf[i];
+            in[i][0] = buf[i] * 0.5 * (1.0 - cos(2.0 * M_PI * i / static_cast<long double>(N - 1))); //window function
             in[i][1] = 0;
         }
     }
@@ -194,6 +194,8 @@ int DSPMAIN()
     }
     
 
+
+    p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
     FILE* fftOut;
     fopen_s(&fftOut, "./fftOut.txt", "w");
     if (fftOut != NULL)
@@ -208,6 +210,27 @@ int DSPMAIN()
 
     }
 
+
+
+    q = fftw_plan_dft_1d(N, out, in2, FFTW_BACKWARD, FFTW_ESTIMATE);
+    FILE* fftRevOut;
+    fopen_s(&fftRevOut, "./fftRevOut.txt", "w");
+    if (fftRevOut != NULL)
+    {
+        /* backward Fourier transform, save the result in 'in2' */
+        fftw_execute(q);
+        /* normalize */
+        for (i = 0; i < N; i++) {
+            in2[i][0] *= 1. / N;
+            in2[i][1] *= 1. / N;
+        }
+        for (i = 0; i < N; i++)
+            fprintf(fftRevOut,"recover: %3d %+9.5f %+9.5f I vs. %+9.5f %+9.5f I\n",
+                i, in[i][0], in[i][1], in2[i][0], in2[i][1]);
+
+        fclose(fftRevOut);
+    }
+    fftw_destroy_plan(q);
 
     fftw_destroy_plan(p);
     fftw_cleanup();
