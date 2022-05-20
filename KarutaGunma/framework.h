@@ -11,11 +11,13 @@
 #include <commdlg.h>
 // C RunTime Header Files
 #include <stdlib.h>
+#include <math.h>
 #include <malloc.h>
 #include <memory.h>
 #include <tchar.h>
 #include <string.h>
 #include <fstream>
+#include <iostream>
 // include library
 #include "sndfile.hh"
 #include "fftw3.h"

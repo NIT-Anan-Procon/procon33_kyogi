@@ -216,7 +216,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
             HDC hdc = BeginPaint(hWnd, &ps);
             // TODO: Add any drawing code that uses hdc here...
             RECT rec;
-            TextOut(hdc, 10, 30, L"Kontol sample", 13);
+            TextOut(hdc, 10, 30, L"sample12char", 13);
             SetTextColor(hdc, RGB(0, 255, 255));
             rec.top = 50;
             rec.left = 10;
