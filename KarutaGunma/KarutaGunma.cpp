@@ -12,6 +12,9 @@ HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
 WCHAR szWindowClass[MAX_LOADSTRING];            // the main window class name
 
+//wav file object ptr
+static WavFile* pwavFile;
+
 // Forward declarations of functions included in this code module:
 ATOM                MyRegisterClass(HINSTANCE hInstance);
 BOOL                InitInstance(HINSTANCE, int);
@@ -27,7 +30,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
-    //sf_open to open file
+
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -141,8 +144,15 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 break;
             case ID_FILE_LOADFILE:
 
-                    //do stuff in side the dspmain
-                    DSPMAIN();
+                //initialize wav file object
+                initWavFile(&pwavFile);
+                break;
+            case ID_DSP_DUMPDATA:
+                pwavFile->dump();
+
+                break;
+            case ID_DSP_FFT:
+                fftWav(pwavFile);
 
                 break;
             default:
@@ -170,6 +180,10 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
         break;
     case WM_DESTROY:
         PostQuitMessage(0);
+        if (pwavFile != nullptr)
+        {
+            delete pwavFile;
+        }
         break;
     default:
         return DefWindowProc(hWnd, message, wParam, lParam);
