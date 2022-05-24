@@ -1,4 +1,5 @@
 #include "framework.h"
+#include "DSP.h"
 #include <iostream>
 
 
@@ -15,6 +16,8 @@
 		#define OP_DBL_Digs (DBL_DIG + 3)
 	#endif
 #endif
+
+
 
 int
 convert_to_text(SndfileHandle sndf,FILE* outfile, int full_precision)
@@ -101,8 +104,30 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
     std::wstring wstrErr = std::wstring(strErr.begin(), strErr.end());
     const wchar_t* wErr = wstrErr.c_str();
 
-    //log
+    //log window and file
+    std::wstring outputSW = L"Opened file  :";
+    outputSW += pofn->lpstrFile;
 
+    std::string outputS = "";
+    outputS += "\nError        :";
+    outputS += strErr;
+    outputS += "\nSample rate  :";
+    outputS += std::to_string( myf->samplerate());
+    outputS += "\nChannels     :";
+    outputS += std::to_string(myf->channels());
+    outputS += "\nFrames     :";
+    outputS += std::to_string(int(myf->frames()));
+
+    std::wstring outputSW2 = std::wstring(outputS.begin(), outputS.end());
+    outputSW += outputSW2;
+
+    const wchar_t* output = outputSW.c_str();
+    MessageBoxW(NULL,output, L"Log", MB_OK);
+
+
+    //file
+
+    /*
     std::locale::global(std::locale(""));
     std::wofstream myfile;
     myfile.open("Wcharexample.txt", std::ios::app);
@@ -113,40 +138,38 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
     myfile << "Channels     :" << myf->channels() << '\n';
     myfile << "Frames       :" << int(myf->frames()) << '\n';
     myfile.close();
-
-
-
-    //dump
-    /*
-    FILE* dataOut;
-    fopen_s(&dataOut, "./dataOut.txt", "w");
-    if (dataOut != NULL)
-    {
-        convert_to_text(*myf, dataOut, 0);
-
-        fclose(dataOut);
-    }
     */
+
+
+
     return 1;
 }
 
 //main stuff to do ( break off from gui)
-int DSPMAIN()
+int initWavFile(WavFile** pwavFile)
 {
-    // common dialog box structure, setting all fields to 0 is important
-    OPENFILENAME ofn = { 0 };
-    TCHAR szFile[260] = { 0 };
+    if (*pwavFile == nullptr)
+    {
+        *pwavFile = new WavFile;
+    }
+    else {
+        (*pwavFile)->reload();
+    }
 
-    //load file into filehandle
-    SndfileHandle SNDfile;
-
-    if (openFileWav(&ofn, sizeof(ofn), szFile, sizeof(szFile)) == -1)
+    
+    if ( (*pwavFile) != nullptr)
+    {
+        return 1;
+    }
+    else
     {
         return -1;
     }
-    loadWav(&ofn, &SNDfile);
+}
 
-
+int fftWav(WavFile* pwavFile)
+{
+    pwavFile->load();
 
     //Do DSP here
     const int N = 32767;
@@ -156,7 +179,7 @@ int DSPMAIN()
     fftw_complex* out = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
     fftw_complex* in2 = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
     //fftw_complex in[N], out[N]; /* double [2] */
-    fftw_plan p,q;
+    fftw_plan p, q;
     int i;
 
 
@@ -165,7 +188,7 @@ int DSPMAIN()
     if (buf == nullptr)
     {
         printf("Error : Out of memory.\n\n");
-        
+
     };
 
     /* prepare a cosine wave */
@@ -178,13 +201,13 @@ int DSPMAIN()
     /* forward Fourier transform, save the result in 'out' */
 
 
-    
-    int frames = N / SNDfile.channels();
 
-    SNDfile.readf(buf, frames);
+    int frames = N / pwavFile->pSNDfile->channels();
+
+    pwavFile->pSNDfile->readf(buf, frames);
 
 
-    if (SNDfile.channels() == 1)
+    if (pwavFile->pSNDfile->channels() == 1)
     {
         for (i = 0; i < N; i++) {
             in[i][0] = buf[i] * 0.5 * (1.0 - cos(2.0 * M_PI * i / static_cast<long double>(N - 1))); //window function
@@ -193,12 +216,12 @@ int DSPMAIN()
     }
     else
     {
-        for (i = 0; 2*i < N; i++) {
-            in[i][0] = buf[2*i-1];
-            in[i][1] = buf[2*i];
+        for (i = 0; 2 * i < N; i++) {
+            in[i][0] = buf[2 * i - 1];
+            in[i][1] = buf[2 * i];
         }
     }
-    
+
 
 
     p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
@@ -206,10 +229,10 @@ int DSPMAIN()
     fopen_s(&fftOut, "./fftOut.txt", "w");
     if (fftOut != NULL)
     {
-        
+
         fftw_execute(p);
         for (i = 0; i < N; i++)
-           fprintf(fftOut,"freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
+            fprintf(fftOut, "freq: %3d %+9.5f %+9.5f I\n", i, out[i][0], out[i][1]);
 
 
         fclose(fftOut);
@@ -231,7 +254,7 @@ int DSPMAIN()
             in2[i][1] *= 1. / N;
         }
         for (i = 0; i < N; i++)
-            fprintf(fftRevOut,"recover: %3d %+9.5f %+9.5f I vs. %+9.5f %+9.5f I\n",
+            fprintf(fftRevOut, "recover: %3d %+9.5f %+9.5f I vs. %+9.5f %+9.5f I\n",
                 i, in[i][0], in[i][1], in2[i][0], in2[i][1]);
 
         fclose(fftRevOut);
@@ -243,7 +266,7 @@ int DSPMAIN()
     fftw_free(in);
     fftw_free(out);
 
-    
+
     delete[] buf;
     return 1;
 }
