@@ -1,18 +1,41 @@
-#include "pbPlots.hpp"
-#include "supportLib.hpp"
+#include "matplotlibcpp.h"
+#include <vector>
+
+namespace plt = matplotlibcpp;
 
 int main() {
-	//creating an image
-	RGBABitmapImageReference* imageRef = CreateRGBABitmapImageReference();
-
-	vector<double> x{ -2, -1, 0, 1, 2 };
-	vector<double> y{ 2, -1, -2, -1, 2 };
-
-	DrawScatterPlot(imageRef, 600, 400, x, y);
-
-	vector<double>* pngData = ConvertToPNG(imageRef -> image);
-	WriteToFile(pngData, "plot.png");
-	DeleteImage(imageRef->image);
-
-	return 0;
+	std::vector<double> y = { 1, 3, 2, 4 };
+	plt::plot(y);
+	plt::savefig("minimal.pdf");
 }
+
+/* the standard way
+#define _USE_MATH_DEFINES // for sin/log
+#include "../matplotlibcpp.h"
+#include <cmath>
+#include <iostream>
+
+namespace plt = matplotlibcpp;
+
+int main() {
+  int n = 5000; // 5000 data points
+  std::vector<double> x(n), y(n), z(n), w(n, 2);
+  for (int i = 0; i < n; ++i) {
+	x.at(i) = i * i;
+	y.at(i) = sin(2 * M_PI * i / 360.0);
+	z.at(i) = log(i);
+  }
+
+  plt::figure(); // declare a new figure (optional if only one is used)
+
+  plt::plot(x, y);                        // automatic coloring: tab:blue
+  plt::plot(x, w, "r--");                 // red dashed line
+  plt::plot(x, z, {{"label", "log(x)"}}); // legend label "log(x)"
+
+  plt::xlim(0, 1000 * 1000);    // x-axis interval: [0, 1e6]
+  plt::title("Standard usage"); // set a title
+  plt::legend();                // enable the legend
+
+  plt::savefig("standard.pdf"); // save the figure
+}
+*/
