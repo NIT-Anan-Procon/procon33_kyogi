@@ -56,7 +56,7 @@ convert_to_text(SndfileHandle sndf,FILE* outfile, int full_precision)
 	return 0;
 } /* convert_to_text */
 
-int openFileWav(OPENFILENAME* pofn, DWORD size, LPWSTR szFile, DWORD sizeFile )
+int openFileWav(OPENFILENAME* pofn, DWORD size, LPWSTR szFile, DWORD sizeFile, LPWSTR szFileTitle, DWORD sizeFileTitle)
 {
     
     // Initialize remaining fields of OPENFILENAME structure
@@ -66,8 +66,8 @@ int openFileWav(OPENFILENAME* pofn, DWORD size, LPWSTR szFile, DWORD sizeFile )
     pofn->nMaxFile = sizeFile;
     pofn->lpstrFilter = _T("Wav File(*.wav)\0*.WAV\0All\0*.*\0");
     pofn->nFilterIndex = 1;
-    pofn->lpstrFileTitle = NULL;
-    pofn->nMaxFileTitle = 0;
+    pofn->lpstrFileTitle = szFileTitle;
+    pofn->nMaxFileTitle = sizeFileTitle;
     pofn->lpstrInitialDir = NULL;
     pofn->Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
 
