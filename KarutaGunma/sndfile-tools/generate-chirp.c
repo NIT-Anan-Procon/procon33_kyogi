@@ -17,6 +17,8 @@
 
 /* Generate a sound file containing a chirp */
 
+#pragma once
+#include "../framework.h"
 #include <stdlib.h>
 #include <string.h>
 #include <errno.h>
@@ -24,7 +26,6 @@
 
 #include "common.h"
 
-#include <sndfile.h>
 
 typedef double (*freq_func_t) (double w0, double w1, double total_length) ;
 

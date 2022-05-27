@@ -25,7 +25,8 @@
 **        arg).
 **      - Better cmdline arg parsing and flexibility.
 */
-
+#pragma once
+#include "../framework.h"
 #include <stdlib.h>
 #include <string.h>
 #include <stdbool.h>
@@ -34,9 +35,6 @@
 #include <assert.h>
 
 #include <cairo.h>
-#include <fftw3.h>
-
-#include <sndfile.h>
 
 #include "window.h"
 #include "common.h"

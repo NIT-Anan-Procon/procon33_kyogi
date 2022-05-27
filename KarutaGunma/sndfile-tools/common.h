@@ -15,8 +15,8 @@
 ** along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
-#include <sndfile.h>
+#pragma once
+#include "../framework.h"
 
 #define ARRAY_LEN(x)	((int) (sizeof (x) / sizeof (x [0])))
 

@@ -16,6 +16,9 @@
     <Filter Include="references">
       <UniqueIdentifier>{0cee5515-9a66-421d-8d6c-fcf4dc299198}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sndfile-tools">
+      <UniqueIdentifier>{707fa5d5-2d10-4a5a-a27d-cbfa3bbd1cb3}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
