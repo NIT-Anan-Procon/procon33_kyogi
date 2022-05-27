@@ -24,14 +24,22 @@ public:
     //load file into filehandle
     SndfileHandle* pSNDfile;
 
+    bool hasLoaded;
+
     WavFile()
     {
         pofn = new OPENFILENAME();
         *pofn = { 0 };
         pSNDfile = new SndfileHandle();
+        hasLoaded = false;
 
-        openFileWav(pofn, sizeof(*pofn), szFile, sizeof(szFile));
-        load();
+        if (openFileWav(pofn, sizeof(*pofn), szFile, sizeof(szFile)) == 1)
+        {
+            if (load() == 1)
+            {
+                hasLoaded = true;
+            }
+        }
     }
 
     ~WavFile()
@@ -42,9 +50,17 @@ public:
 
     int reload()
     {
-        openFileWav(pofn, sizeof(*pofn), szFile, sizeof(szFile));
-        load();
-        return 1;
+
+        if (openFileWav(pofn, sizeof(*pofn), szFile, sizeof(szFile)) == 1)
+        {
+            if (load() == 1)
+            {
+                hasLoaded = true;
+            }
+
+            return 1;
+        }
+        return -1;
     }
 
     int load()

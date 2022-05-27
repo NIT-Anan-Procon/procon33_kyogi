@@ -79,6 +79,7 @@ int openFileWav(OPENFILENAME* pofn, DWORD size, LPWSTR szFile, DWORD sizeFile )
         logFile.close();
         return -1;
     }
+
     return 1;
 
 
