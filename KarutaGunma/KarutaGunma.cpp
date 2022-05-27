@@ -148,16 +148,23 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 initWavFile(&pwavFile);
                 break;
             case ID_DSP_DUMPDATA:
-                if (pwavFile->hasLoaded == true)
+                if (pwavFile != nullptr)
                 {
-                    pwavFile->dump();
+                    if (pwavFile->hasLoaded == true)
+                    {
+                        pwavFile->dump();
+                    }
                 }
+
 
                 break;
             case ID_DSP_FFT:
-                if (pwavFile->hasLoaded == true)
+                if (pwavFile != nullptr)
                 {
-                    fftWav(pwavFile);
+                    if (pwavFile->hasLoaded == true)
+                    {
+                        fftWav(pwavFile);
+                    }
                 }
 
                 break;

@@ -173,7 +173,7 @@ int fftWav(WavFile* pwavFile)
     pwavFile->load();
 
     //Do DSP here
-    const int N = 32767;
+    const int N = pwavFile->pSNDfile->frames();
 
 
     fftw_complex* in = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
@@ -211,7 +211,8 @@ int fftWav(WavFile* pwavFile)
     if (pwavFile->pSNDfile->channels() == 1)
     {
         for (i = 0; i < N; i++) {
-            in[i][0] = buf[i] * 0.5 * (1.0 - cos(2.0 * M_PI * i / static_cast<long double>(N - 1))); //window function
+            //in[i][0] = buf[i] * 0.5 * (1.0 - cos(2.0 * M_PI * i / static_cast<long double>(N - 1))); //window function
+            in[i][0] = buf[i];
             in[i][1] = 0;
         }
     }
@@ -227,7 +228,12 @@ int fftWav(WavFile* pwavFile)
 
     p = fftw_plan_dft_1d(N, in, out, FFTW_FORWARD, FFTW_ESTIMATE);
     FILE* fftOut;
-    fopen_s(&fftOut, "./fftOut.txt", "w");
+    std::wstring outputSW = L"./fftOut_";
+    outputSW += pwavFile->pofn->lpstrFileTitle;
+    outputSW += L".txt";
+
+    const wchar_t* output = outputSW.c_str();
+    _wfopen_s(&fftOut, output, L"w");
     if (fftOut != NULL)
     {
 
@@ -244,7 +250,14 @@ int fftWav(WavFile* pwavFile)
 
     q = fftw_plan_dft_1d(N, out, in2, FFTW_BACKWARD, FFTW_ESTIMATE);
     FILE* fftRevOut;
-    fopen_s(&fftRevOut, "./fftRevOut.txt", "w");
+    std::wstring outputRevSW = L"./fftRevOut_";
+    outputRevSW += pwavFile->pofn->lpstrFileTitle;
+    outputRevSW += L".txt";
+
+    double* outdata = new double[frames];
+
+    const wchar_t* outputRev = outputRevSW.c_str();
+    _wfopen_s(&fftRevOut, outputRev, L"w");
     if (fftRevOut != NULL)
     {
         /* backward Fourier transform, save the result in 'in2' */
@@ -252,6 +265,7 @@ int fftWav(WavFile* pwavFile)
         /* normalize */
         for (i = 0; i < N; i++) {
             in2[i][0] *= 1. / N;
+            outdata[i] = in2[i][0];
             in2[i][1] *= 1. / N;
         }
         for (i = 0; i < N; i++)
@@ -265,9 +279,25 @@ int fftWav(WavFile* pwavFile)
     fftw_destroy_plan(p);
     fftw_cleanup();
     fftw_free(in);
+    fftw_free(in2);
     fftw_free(out);
+
+    //const int format = SF_FORMAT_WAV | SF_FORMAT_PCM_16;
+    const int format=SF_FORMAT_WAV | SF_FORMAT_FLOAT;
+    const int channels = 1;
+    const int sampleRate = 48000;
+    const char* outfilename = "foo.wav";
+
+    SndfileHandle outfile(outfilename, SFM_WRITE, format, channels, sampleRate);
+    if (not outfile) return -1;
+
+    // prepare a 3 seconds buffer and write it
+
+        outfile.writef(outdata,frames);
+    
 
 
     delete[] buf;
+    delete[] outdata;
     return 1;
 }
