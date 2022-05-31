@@ -321,6 +321,15 @@ int fftWav(WavFile* pwavFile)
 
             outfile.writef(outdata, frames);
         
+            //plotting
+
+            double ydata[N];
+            for (i = 0; i < N; i++)
+            {
+
+                ydata[i] = log(sqrt(out[i][0] * out[i][0] + out[i][1] * out[i][1]));
+
+            }
 
     }
 
