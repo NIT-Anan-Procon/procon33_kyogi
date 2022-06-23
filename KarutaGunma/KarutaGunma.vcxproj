@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -151,11 +152,10 @@
     <ClInclude Include="fftw3.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="DSP.h" />
-    <ClInclude Include="KarutaGunma.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sndfile.h" />
     <ClInclude Include="sndfile.hh" />
-    <ClInclude Include="targetver.h" />
+    <ClInclude Include="Plotsine.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp" />

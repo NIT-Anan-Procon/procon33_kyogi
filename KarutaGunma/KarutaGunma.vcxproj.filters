@@ -19,18 +19,15 @@
     <Filter Include="sndfile-tools">
       <UniqueIdentifier>{707fa5d5-2d10-4a5a-a27d-cbfa3bbd1cb3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="sciplot">
+      <UniqueIdentifier>{b56ac1ee-d672-4d66-8df2-8c143fa1fa58}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="framework.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="targetver.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Resource.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="KarutaGunma.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="sndfile.h">
@@ -43,6 +40,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DSP.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Plotsine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
