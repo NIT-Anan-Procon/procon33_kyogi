@@ -173,8 +173,8 @@ int fftWav(WavFile* pwavFile)
     pwavFile->load();
 
     //Do DSP here
-    const int N = pwavFile->pSNDfile->frames();
-
+   // const int N = static_cast<int>(pwavFile->pSNDfile->frames()) ;
+    const int N = 32767*2*2;
 
     fftw_complex* in = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
     fftw_complex* out = static_cast<fftw_complex*>(fftw_malloc(sizeof(fftw_complex) * N));
