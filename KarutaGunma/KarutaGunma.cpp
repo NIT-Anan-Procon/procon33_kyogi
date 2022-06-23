@@ -7,6 +7,8 @@
 
 #define MAX_LOADSTRING 100
 
+namespace plt = matplotlibcpp;
+
 // Global Variables:
 HINSTANCE hInst;                                // current instance
 WCHAR szTitle[MAX_LOADSTRING];                  // The title bar text
@@ -27,6 +29,9 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
+    std::vector<double> y = { 1, 3, 2, 4 };
+    plt::plot(y);
+    plt::savefig("minimal.pdf");
     //sf_open to open file
 
     // Initialize global strings
