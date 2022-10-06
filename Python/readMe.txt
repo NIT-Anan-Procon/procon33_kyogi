@@ -1,0 +1,1 @@
+このファイルはJupyternotebookまたはGoogle Colabで開く
