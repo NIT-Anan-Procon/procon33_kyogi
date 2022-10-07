@@ -88,7 +88,8 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)KarutaGunma\sciplot;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -149,17 +150,77 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\alglibinternal.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\alglibmisc.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\ap.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\dataanalysis.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\diffequations.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\fasttransforms.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\integration.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\interpolation.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\linalg.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\optimization.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\solvers.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\specialfunctions.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\statistics.h" />
+    <ClInclude Include="..\..\..\..\..\..\..\Program Files (x86)\ALGLIB\include\stdafx.h" />
+    <ClInclude Include="CustomCorrelate.h" />
     <ClInclude Include="fftw3.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="DSP.h" />
     <ClInclude Include="Resource.h" />
+    <ClInclude Include="sciplot\deps\doxystrap\example\src\Example.hpp" />
+    <ClInclude Include="sciplot\sciplot\ColumnIndex.hpp" />
+    <ClInclude Include="sciplot\sciplot\Constants.hpp" />
+    <ClInclude Include="sciplot\sciplot\Default.hpp" />
+    <ClInclude Include="sciplot\sciplot\Enums.hpp" />
+    <ClInclude Include="sciplot\sciplot\Figure.hpp" />
+    <ClInclude Include="sciplot\sciplot\Palettes.hpp" />
+    <ClInclude Include="sciplot\sciplot\Plot.hpp" />
+    <ClInclude Include="sciplot\sciplot\Plot3D.hpp" />
+    <ClInclude Include="sciplot\sciplot\PlotBase.hpp" />
+    <ClInclude Include="sciplot\sciplot\sciplot.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\AxisLabelSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\BorderSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\DepthSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\DrawSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\FilledCurvesSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\FillSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\FillStyleSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\FontSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\FrameSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\GridSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\GridSpecsBase.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\HistogramStyleSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\LabelSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\LegendSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\LineSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\OffsetSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\PointSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\ShowSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\Specs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\TextSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\TicsSpecs.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\TicsSpecsBaseOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\TicsSpecsMajor.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\TicsSpecsMinor.hpp" />
+    <ClInclude Include="sciplot\sciplot\specs\TitleSpecsOf.hpp" />
+    <ClInclude Include="sciplot\sciplot\StringOrDouble.hpp" />
+    <ClInclude Include="sciplot\sciplot\Utils.hpp" />
+    <ClInclude Include="sciplot\sciplot\Vec.hpp" />
+    <ClInclude Include="sciplot\tests\catch.hpp" />
+    <ClInclude Include="sciplot\tests\testing-project\util.hpp" />
     <ClInclude Include="sndfile.h" />
     <ClInclude Include="sndfile.hh" />
-    <ClInclude Include="Plotsine.h" />
+    <ClInclude Include="PlotSine.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="KarutaGunma.cpp" />
+    <ClCompile Include="KarutaGunma.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
+    </ClCompile>
     <ClCompile Include="DSP.cpp" />
+    <ClCompile Include="PlotSine.cpp" />
+    <ClCompile Include="CustomCorrelate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="KarutaGunma.rc" />
@@ -169,6 +230,7 @@
     <Image Include="small.ico" />
   </ItemGroup>
   <ItemGroup>
+    <Library Include="lib\ALGLIB.lib" />
     <Library Include="lib\libfftw3-3.lib" />
     <Library Include="lib\libfftw3f-3.lib" />
     <Library Include="lib\libfftw3l-3.lib" />
@@ -176,11 +238,16 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="fftw-3.3.5-dll32.zip" />
+    <None Include="lib\ALGLIB.dll" />
     <None Include="lib\libfftw3-3.dll" />
     <None Include="lib\libfftw3f-3.dll" />
     <None Include="lib\libfftw3l-3.dll" />
     <None Include="lib\sndfile.dll" />
     <None Include="programs.zip" />
+    <None Include="sciplot\deps\doxystrap\doxystrap-footer.html" />
+    <None Include="sciplot\deps\doxystrap\doxystrap-header.html" />
+    <None Include="sciplot\docs\api\template\footer.html" />
+    <None Include="sciplot\docs\api\template\header.html" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
