@@ -1,9 +1,23 @@
 // KarutaGunma.cpp : Defines the entry point for the application.
 //
 
+
+#include "Plotsine.h"
+
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#endif
+#ifndef VC_EXTRALEAN
+#define VC_EXTRALEAN
+#endif
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+
 #include "framework.h"
 #include "DSP.h"
 #include "KarutaGunma.h"
+#include "CustomCorrelate.h"
 
 #define MAX_LOADSTRING 100
 
@@ -30,7 +44,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
     UNREFERENCED_PARAMETER(lpCmdLine);
 
     // TODO: Place code here.
-
 
     // Initialize global strings
     LoadStringW(hInstance, IDS_APP_TITLE, szTitle, MAX_LOADSTRING);
@@ -148,6 +161,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 initWavFile(&pwavFile);
                 break;
             case ID_DSP_DUMPDATA:
+                //plotSine();
                 if (pwavFile != nullptr)
                 {
                     if (pwavFile->hasLoaded == true)
@@ -167,6 +181,34 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                 }
 
+                break;
+
+            case ID_DSP_CORRELATETESTJ01:
+                if (pwavFile != nullptr)
+                {
+                    if (pwavFile->hasLoaded == true)
+                    {
+                        testCorrelateJ01(pwavFile);
+                    }
+                }
+                break;
+            case ID_DSP_CORRELATEALLJ:
+                if (pwavFile != nullptr)
+                {
+                    if (pwavFile->hasLoaded == true)
+                    {
+                        correlateAllJ(pwavFile);
+                    }
+                }
+                break;
+            case ID_DSP_CORRELATEALLE:
+                if (pwavFile != nullptr)
+                {
+                    if (pwavFile->hasLoaded == true)
+                    {
+                        correlateAllE(pwavFile);
+                    }
+                }
                 break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);

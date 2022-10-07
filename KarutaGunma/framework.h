@@ -18,6 +18,7 @@
 #include <string.h>
 #include <fstream>
 #include <iostream>
+#include <vector>
 // include library
 #include "sndfile.hh"
 #include "fftw3.h"
