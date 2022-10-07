@@ -206,7 +206,7 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
     std::vector<double> dataZ;
    
 
-    //load J01
+    //load yomi data
     SndfileHandle wavJ01 =  SndfileHandle(fileName);
     int targetN = wavJ01.frames();
     double* buf = new double[targetN];
@@ -222,7 +222,7 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
     int n = N1;
     int max_n = dataZ.size();
 
-    //load J01 into X
+    //load yomi into X
     int frames = N1 / pwavFile->pSNDfile->channels();
 
     pwavFile->pSNDfile->readf(X, frames);
@@ -239,10 +239,6 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
     outputS += "/ ";
     outputS += std::to_string(r);
 
-    std::wstring outputSW = std::wstring(outputS.begin(), outputS.end());
-
-    const wchar_t* output = outputSW.c_str();
-    MessageBoxW(NULL, output, L"frame/highest r", MB_OK);
 
     delete[] X;
 
@@ -308,3 +304,109 @@ double testCorrelateJ01(WavFile* pwavFile)
     return r;
 
 }
+
+//correlate mondai against all yomi and output into a file
+void correlateAllJ(WavFile* pwavFile)
+{
+    //manipulate string
+    std::string fileName;
+    std::string output = "";
+
+    double r = -3;
+    int frame = -1;
+
+    //iterate filename
+    for (int i = 1; i < 45; i++)
+    {
+        fileName = "J";
+        if (i < 10)
+        {
+            fileName += "0";
+            fileName += std::to_string(i);
+            fileName += ".wav";
+        }
+        else
+        {
+
+            fileName += std::to_string(i);
+            fileName += ".wav";
+        }
+        //get r
+        r = testCorrelate(pwavFile, fileName, &frame);
+
+        //print out in file
+        output = std::to_string(frame);
+
+        output += "/ ";
+        output += std::to_string(r);
+        output += "\n";
+
+        FILE* outfile;
+        std::wstring outname = L"";
+        outname += pwavFile->pofn->lpstrFileTitle;
+        outname += L"J.txt";
+
+        const wchar_t* outputTitle = outname.c_str();
+        _wfopen_s(&outfile, outputTitle, L"a");
+        if (outfile != NULL)
+        {
+            fprintf(outfile, "%d / %lf \n",
+                frame, r);
+
+            fclose(outfile);
+        }
+    }
+}
+
+void correlateAllE(WavFile* pwavFile)
+{
+    {
+        //manipulate string
+        std::string fileName;
+        std::string output = "";
+
+        double r = -3;
+        int frame = -1;
+
+        //iterate filename
+        for (int i = 1; i < 45; i++)
+        {
+            fileName = "E";
+            if (i < 10)
+            {
+                fileName += "0";
+                fileName += std::to_string(i);
+                fileName += ".wav";
+            }
+            else
+            {
+
+                fileName += std::to_string(i);
+                fileName += ".wav";
+            }
+            //get r
+            r = testCorrelate(pwavFile, fileName, &frame);
+
+            //print out in file
+            output = std::to_string(frame);
+
+            output += "/ ";
+            output += std::to_string(r);
+            output += "\n";
+
+            FILE* outfile;
+            std::wstring outname = L"";
+            outname += pwavFile->pofn->lpstrFileTitle;
+            outname += L"E.txt";
+
+            const wchar_t* outputTitle = outname.c_str();
+            _wfopen_s(&outfile, outputTitle, L"a");
+            if (outfile != NULL)
+            {
+                fprintf(outfile, "%d / %lf \n",
+                    frame, r);
+
+                fclose(outfile);
+            }
+        }
+    }

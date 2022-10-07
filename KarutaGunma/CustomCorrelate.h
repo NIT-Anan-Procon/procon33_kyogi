@@ -9,3 +9,6 @@ struct corrX {
 };
 
 double testCorrelateJ01(WavFile* pwavFile);
+
+void correlateAllJ(WavFile* pwavFile);
+void correlateAllE(WavFile* pwavFile);

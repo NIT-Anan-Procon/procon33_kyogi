@@ -192,6 +192,24 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                     }
                 }
                 break;
+            case ID_DSP_CORRELATEALLJ:
+                if (pwavFile != nullptr)
+                {
+                    if (pwavFile->hasLoaded == true)
+                    {
+                        correlateAllJ(pwavFile);
+                    }
+                }
+                break;
+            case ID_DSP_CORRELATEALLE:
+                if (pwavFile != nullptr)
+                {
+                    if (pwavFile->hasLoaded == true)
+                    {
+                        correlateAllE(pwavFile);
+                    }
+                }
+                break;
             default:
                 return DefWindowProc(hWnd, message, wParam, lParam);
             }
