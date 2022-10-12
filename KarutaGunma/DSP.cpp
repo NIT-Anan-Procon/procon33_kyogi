@@ -123,7 +123,7 @@ int loadWav(OPENFILENAME* pofn, SndfileHandle* myf)
     outputSW += outputSW2;
 
     const wchar_t* output = outputSW.c_str();
-    MessageBoxW(NULL,output, L"Log", MB_OK);
+    //MessageBoxW(NULL,output, L"Log", MB_OK);
 
 
     //file

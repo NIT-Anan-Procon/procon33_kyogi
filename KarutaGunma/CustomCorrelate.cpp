@@ -148,7 +148,7 @@ void Yselect(double* Y[], std::vector<double>* dataZ, int n, int offset)
     }
 }
 
-double highestCorr(double sum_X, double squareSum_X, double X[], std::vector<double>* dataZ, int max_n, int n, int* frame)
+double highestCorr(double sum_X, double squareSum_X, double X[], std::vector<double>* dataZ, int max_n, int n, int* frame,int scale)
 {
     double highest_r = -3;
     double r  =-2;
@@ -156,7 +156,7 @@ double highestCorr(double sum_X, double squareSum_X, double X[], std::vector<dou
     {
 
         //Yselect(&Y, dataZ, n, i);
-        r = correlationCoefficientXD(sum_X, squareSum_X, X, dataZ, n,i,300);
+        r = correlationCoefficientXD(sum_X, squareSum_X, X, dataZ, n,i,scale);
 
         if (r > highest_r)
         {
@@ -179,7 +179,7 @@ double highestCorr(double sum_X, double squareSum_X, double X[], std::vector<dou
 }
 
 // Driver function
-double correlate(double X[], std::vector<double>* dataZ,int n,int* frame)
+double correlate(double X[], std::vector<double>* dataZ,int n,int* frame, int scale)
 {
 
     //Find the size of array.
@@ -187,9 +187,9 @@ double correlate(double X[], std::vector<double>* dataZ,int n,int* frame)
 
     //Function call to correlationCoefficient.
     corrX Xset1;
-    findXD(&Xset1, X, n,300);
+    findXD(&Xset1, X, n,scale);
 
-    double r = highestCorr(Xset1.sum_X, Xset1.squareSum_X, X, dataZ, max_n, n,frame);
+    double r = highestCorr(Xset1.sum_X, Xset1.squareSum_X, X, dataZ, max_n, n,frame,scale);
     
 
     return r;
@@ -211,7 +211,7 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
     int targetN = wavJ01.frames();
     double* buf = new double[targetN];
     std::string capttarget = std::to_string(targetN);
-    MessageBox(NULL, std::wstring(capttarget.begin(), capttarget.end()).c_str(), L"target(bunkatsu data) frames", MB_OK);
+    //MessageBox(NULL, std::wstring(capttarget.begin(), capttarget.end()).c_str(), L"target(bunkatsu data) frames", MB_OK);
 
     wavJ01.readf(buf, targetN);
 
@@ -228,9 +228,9 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
     pwavFile->pSNDfile->readf(X, frames);
 
     //downsample
+    int scale = 100;
 
-
-    double r = correlate(X, &dataZ, n,foundFrame);
+    double r = correlate(X, &dataZ, n,foundFrame,scale);
 
     std::string outputS = "";
 
@@ -241,7 +241,7 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
 
 
     delete[] X;
-
+    delete[] buf;
 
     return r;
     
@@ -282,9 +282,9 @@ double testCorrelateJ01(WavFile* pwavFile)
     pwavFile->pSNDfile->readf(X, frames);
 
     //downsample
+    int scale = 200;
 
-
-    double r = correlate(X, &dataZ, n, &foundFrame);
+    double r = correlate(X, &dataZ, n, &foundFrame,scale);
 
     std::string outputS = "";
 
@@ -410,3 +410,4 @@ void correlateAllE(WavFile* pwavFile)
             }
         }
     }
+}
