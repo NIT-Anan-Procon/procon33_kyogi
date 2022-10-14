@@ -1,4 +1,4 @@
-#include <sciplot/sciplot.hpp>
+#include "sciplot/sciplot.hpp"
 using namespace sciplot;
 
 int plotSine()
