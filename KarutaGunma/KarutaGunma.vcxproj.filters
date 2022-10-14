@@ -221,9 +221,6 @@
     <ClCompile Include="DSP.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="PlotSine.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="CustomCorrelate.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

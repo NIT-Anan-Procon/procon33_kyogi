@@ -219,7 +219,6 @@
       <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
     </ClCompile>
     <ClCompile Include="DSP.cpp" />
-    <ClCompile Include="PlotSine.cpp" />
     <ClCompile Include="CustomCorrelate.cpp" />
   </ItemGroup>
   <ItemGroup>
