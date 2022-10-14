@@ -168,6 +168,7 @@
     <ClInclude Include="fftw3.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="DSP.h" />
+    <ClInclude Include="Optimize.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="sciplot\deps\doxystrap\example\src\Example.hpp" />
     <ClInclude Include="sciplot\sciplot\ColumnIndex.hpp" />

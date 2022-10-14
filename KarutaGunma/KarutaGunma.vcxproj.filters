@@ -213,6 +213,9 @@
     <ClInclude Include="CustomCorrelate.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="Optimize.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="KarutaGunma.cpp">

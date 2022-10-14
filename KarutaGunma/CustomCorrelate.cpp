@@ -222,7 +222,7 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
     int n = N1;
     int max_n = dataZ.size();
 
-    //load yomi into X
+    //load mondai into X
     int frames = N1 / pwavFile->pSNDfile->channels();
 
     pwavFile->pSNDfile->readf(X, frames);
