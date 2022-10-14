@@ -18,6 +18,7 @@
 #include "DSP.h"
 #include "KarutaGunma.h"
 #include "CustomCorrelate.h"
+#include "Optimize.h"
 
 #define MAX_LOADSTRING 100
 
@@ -197,7 +198,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     if (pwavFile->hasLoaded == true)
                     {
-                        correlateAllJ(pwavFile);
+                        correlateAllJOpt(pwavFile,50);
                     }
                 }
                 break;
@@ -206,7 +207,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
                 {
                     if (pwavFile->hasLoaded == true)
                     {
-                        correlateAllE(pwavFile);
+                        correlateAllEOpt(pwavFile,50);
                     }
                 }
                 break;

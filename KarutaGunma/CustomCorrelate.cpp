@@ -93,7 +93,7 @@ double correlationCoefficientX(double sum_X, double squareSum_X, double X[], std
     return corr;
 }
 
-double correlationCoefficientXD(double sum_X, double squareSum_X, double X[], std::vector<double>* Y, int n, int offset,int scale)
+double correlationCoefficientXD(double sum_X, double squareSum_X, double X[], std::vector<double>* Y, int n, int offset,int scale,int size )
 {
 
     double sum_Y = 0, sum_XY = 0;
@@ -113,9 +113,9 @@ double correlationCoefficientXD(double sum_X, double squareSum_X, double X[], st
     }
 
     // use formula for calculating correlation coefficient.
-    double corr = ((double)n * sum_XY - (double)sum_X * sum_Y)
-        / sqrt(((double)n * squareSum_X - (double)sum_X * sum_X)
-            * ((double)n * squareSum_Y - (double)sum_Y * sum_Y));
+    double corr = ((double)size * sum_XY - (double)sum_X * sum_Y)
+        / sqrt(((double)size * squareSum_X - (double)sum_X * sum_X)
+            * ((double)size * squareSum_Y - (double)sum_Y * sum_Y));
 
     return corr;
 }
@@ -156,7 +156,7 @@ double highestCorr(double sum_X, double squareSum_X, double X[], std::vector<dou
     {
 
         //Yselect(&Y, dataZ, n, i);
-        r = correlationCoefficientXD(sum_X, squareSum_X, X, dataZ, n,i,scale);
+        r = correlationCoefficientXD(sum_X, squareSum_X, X, dataZ, n,i,scale,n/scale);
 
         if (r > highest_r)
         {
@@ -222,7 +222,7 @@ double testCorrelate(WavFile* pwavFile,std::string fileName, int* foundFrame)
     int n = N1;
     int max_n = dataZ.size();
 
-    //load yomi into X
+    //load mondai into X
     int frames = N1 / pwavFile->pSNDfile->channels();
 
     pwavFile->pSNDfile->readf(X, frames);
