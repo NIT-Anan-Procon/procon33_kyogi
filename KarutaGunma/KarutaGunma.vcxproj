@@ -221,7 +221,6 @@
     </ClCompile>
     <ClCompile Include="DSP.cpp" />
     <ClCompile Include="Optimize.cpp" />
-    <ClCompile Include="PlotSine.cpp" />
     <ClCompile Include="CustomCorrelate.cpp" />
   </ItemGroup>
   <ItemGroup>
